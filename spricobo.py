@@ -8,7 +8,7 @@ helptext = '\nusage: python spricobo.py [list]\n\n[list] is a comma separated li
 
 
 if len(sys.argv) != 2:
-    print helptext
+    print(helptext)
     sys.exit()
 
 wishes = sys.argv[1]
@@ -64,7 +64,9 @@ if 'ssc' in wishes:
 
 data = pd.read_excel('Free+English+textbooks.xlsx')
 
-for i in data.itertuples():
+from tqdm import tqdm
+
+for i in tqdm(data.itertuples()):
     if i[12] in wishlist:  # == "Computer Science":
         #  urls.append(i[19].encode('utf-8'))
         url = i[19].encode('utf-8')
