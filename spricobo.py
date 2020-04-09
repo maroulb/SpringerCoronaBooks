@@ -8,7 +8,7 @@ helptext = '\nusage: python spricobo.py [list]\n\n[list] is a comma separated li
 
 
 if len(sys.argv) != 2:
-    print(helptext)
+    print helptext 
     sys.exit()
 
 wishes = sys.argv[1]
