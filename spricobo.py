@@ -3,6 +3,7 @@
 import pandas as pd
 import requests
 import sys
+import os
 
 helptext = '\nusage: python spricobo.py [list]\n\n[list] is a comma separated list (without whitespaces!)\nconsisting of abbreviations of disciplines to download:\n\nall : all books of all disciplines\nbsc : Behavioral Science\nbsp : Behavioral Science and Psychology\nbls : Biomedical and Life Sciences\nbne : Business and Economics\nbnm : Business and Management\ncms : Chemistry and Materials Science\ncsc : Computer Science\nees : Earth and Environmental Science\nenf : Economics and Finance\nedu : Education\neny : Energy\neng : Engineering\nhsl : Humanities, Social Sciences and Law\nitr : Intelligent Technologies and Robotics\nlnc : Law and Criminology\nlcm : Literature, Cultural and Media Studies\nmns : Mathematics and Statistics\nmed : Medicine\npna : Physics and Astronomy\nrnp : Religion and Philosophy\nssc : Social Sciences\n'
 
@@ -65,8 +66,9 @@ if 'ssc' in wishes:
 data = pd.read_excel('Free+English+textbooks.xlsx')
 
 for i in data.itertuples():
-    if i[12] in wishlist:  # == "Computer Science":
-        #  urls.append(i[19].encode('utf-8'))
+    if i[12] in wishlist:
+        if not os.path.exists(i[12]):
+            os.makedirs(i[12])
         url = i[19]
         base, isbn = url.split('&')
         isbn_key, isbn = isbn.split('=')
@@ -75,6 +77,6 @@ for i in data.itertuples():
         r = requests.get(dl_url, allow_redirects=True)
         if r.headers.get('content-type') == 'application/pdf':
             title = i[1]
-            if '/' in title:
-                title, waste = title.split('/')
-            open(title + '.pdf', 'wb').write(r.content)
+            if os.path.sep in title:
+                title, waste = title.split(os.path.sep)
+            open(i[12] + os.path.sep + title + '.pdf', 'wb').write(r.content)
