@@ -8,7 +8,7 @@ helptext = '\nusage: python spricobo.py [list]\n\n[list] is a comma separated li
 
 
 if len(sys.argv) != 2:
-    print helptext
+    print(helptext)
     sys.exit()
 
 wishes = sys.argv[1]
@@ -31,7 +31,7 @@ if 'bnm' in wishes:
 if 'cms' in wishes:
     wishlist.append('Chemistry and Materials Sciences')
 if 'csc' in wishes:
-    wishlist.append('Computer Sciences')
+    wishlist.append('Computer Science')
 if 'ees' in wishes:
     wishlist.append('Earth and Environmental Sciences')
 if 'enf' in wishes:
@@ -67,14 +67,14 @@ data = pd.read_excel('Free+English+textbooks.xlsx')
 for i in data.itertuples():
     if i[12] in wishlist:  # == "Computer Science":
         #  urls.append(i[19].encode('utf-8'))
-        url = i[19].encode('utf-8')
+        url = i[19]
         base, isbn = url.split('&')
         isbn_key, isbn = isbn.split('=')
         base_url = 'https://link.springer.com/content/pdf/10.1007%2F'
         dl_url = base_url + isbn + '.pdf'
         r = requests.get(dl_url, allow_redirects=True)
         if r.headers.get('content-type') == 'application/pdf':
-            title = i[1].encode('utf-8')
+            title = i[1]
             if '/' in title:
                 title, waste = title.split('/')
             open(title + '.pdf', 'wb').write(r.content)
