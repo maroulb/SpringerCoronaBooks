@@ -1,5 +1,5 @@
 """Some docstring here."""
-
+from tqdm import tqdm
 import pandas as pd
 import requests
 import sys
@@ -65,7 +65,7 @@ if 'ssc' in wishes:
 
 data = pd.read_excel('Free+English+textbooks.xlsx')
 
-for i in data.itertuples():
+for i in tqdm(data.itertuples()):
     if i[12] in wishlist:
         if not os.path.exists(i[12]):
             os.makedirs(i[12])
