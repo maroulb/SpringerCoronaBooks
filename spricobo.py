@@ -65,7 +65,9 @@ if 'ssc' in wishes:
 
 data = pd.read_excel('Free+English+textbooks.xlsx')
 
-for i in tqdm(data.itertuples()):
+entries = len(data.index)
+
+for i in tqdm(data.itertuples(), total=entries, unit="entries"):
     if i[12] in wishlist:
         if not os.path.exists(i[12]):
             os.makedirs(i[12])
